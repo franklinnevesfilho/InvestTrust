@@ -2,16 +2,40 @@
     <h1>Employees</h1>
     <div class="row">
         <div class="col" *ngFor="let employee of employees">
-            <div class="card m-1" style="width: 18rem;">
-                <img src="{{employee.imageUrl}}" class="card-img-top" alt="img">
+            <div class="card shadow-sm m-1 p-3 bg-white" style="width: 18rem;">
+                <img src="{{employee.imageUrl}}" class="card-img-top" alt="Picture N/A">
                 <div class="card-body">
                   <h5 class="card-title">{{employee.name}}</h5>
                   <p class="card-text">ID#: {{employee.id}}</p>
                   <p class="card-text">name: {{employee.name}}</p>
-                  <a href="#" class="btn btn-primary">Edit</a>
-                  <a href="#" class="btn btn-danger">delete</a>
+                  <div>
+                    <a class="btn btn-sm btn-outline-primary" (click)="openModal(employee, 'edit')">edit</a>
+                    <a href="#" class="btn btn-sm btn-danger m-1">delete</a>  
+                  </div>
                 </div>
               </div>
         </div>
     </div>
 </div>
+
+<ng-template id="editEmployeeModal" #editEmployeeModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Update Profile</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form #employeeForm="ngForm">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="Code" placeholder="Employee Code" value="" disabled>
+        <label for="code">Code</label>
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" placeholder="Name">
+        <label for="name">Name</label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>

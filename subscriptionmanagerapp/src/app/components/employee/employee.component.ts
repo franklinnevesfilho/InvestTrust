@@ -1,9 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee.service';
 
+declare var window: any; 
 
 @Component({
   selector: 'app-employee',
@@ -13,8 +15,11 @@ import { EmployeeService } from 'src/app/service/employee.service';
 })
 export class EmployeeComponent implements OnInit {
   public employees: Employee[] = [];
+  public employeeToEdit: Employee | undefined;
+  public editEmployeeModal = document.getElementById('editEmployeeModal');
+  
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getEmployees();
@@ -62,6 +67,13 @@ export class EmployeeComponent implements OnInit {
         alert(error.message);
       }
     )
+  }
+
+  openModal(employee: Employee, mode: string){
+    if(mode == "edit"){
+      this.employeeToEdit = employee;
+      this.modalService.open(this.editEmployeeModal,{ariaLabelledBy: 'modal-basic-title'}).result;
+    }
   }
 
   
