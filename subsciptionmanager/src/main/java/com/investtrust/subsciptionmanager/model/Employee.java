@@ -12,9 +12,13 @@ public class Employee implements Serializable {
     private Long id;
     @Column(nullable = false, updatable = false)
     private String employeeCode;
+    @Column
     private String name;
+    @Column
     private String email;
+    @Column
     private String jobTitle;
+    @Column
     private String imageUrl;
 
     public Employee() {}
