@@ -5,7 +5,6 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { Employee } from 'src/app/model/employee';
 import { EmployeeService } from 'src/app/service/employee.service';
 
-declare var window: any; 
 
 @Component({
   selector: 'app-employee',
@@ -35,7 +34,7 @@ export class EmployeeComponent implements OnInit {
     )
   }
 
-  private addEmployee(addForm: NgForm){
+  public addEmployee(addForm: NgForm){
     this.employeeService.addEmployee(addForm.value).subscribe(
       (response : Employee)=>{
         console.log("Added Employee " + response)
@@ -44,7 +43,7 @@ export class EmployeeComponent implements OnInit {
     )
   }
 
-  private editEmployee(editForm : NgForm){
+  public editEmployee(editForm : NgForm){
     this.employeeService.updateEmployee(editForm.value).subscribe(
       (response : Employee)=>{
         console.log("Employee edited: " + response)
@@ -55,7 +54,7 @@ export class EmployeeComponent implements OnInit {
       })
   }
 
-  private deleteEmployeeById(id: number){
+  public deleteEmployeeById(id: number){
     this.employeeService.deleteEmployeeById(id).subscribe(
       (response: void)=>{
         console.log("deleted " + response);
@@ -69,6 +68,9 @@ export class EmployeeComponent implements OnInit {
 
   openModal(employee: Employee, content: any){
     this.selectedEmployee = employee;
+  }
+
+  public openAddModal(content: any){
     this.modalService.open(content);
   }
 
