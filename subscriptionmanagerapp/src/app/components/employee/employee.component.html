@@ -9,7 +9,7 @@
                   <p class="card-text">ID#: {{employee.id}}</p>
                   <p class="card-text">name: {{employee.name}}</p>
                   <div>
-                    <a class="btn btn-sm btn-outline-primary" (click)="openModal(employee, 'edit')">edit</a>
+                    <a class="btn btn-sm btn-outline-primary" (click)="openModal(employee, editEmployeeModal)">edit</a>
                     <a href="#" class="btn btn-sm btn-danger m-1">delete</a>  
                   </div>
                 </div>
@@ -18,20 +18,31 @@
     </div>
 </div>
 
-<ng-template id="editEmployeeModal" #editEmployeeModal let-modal>
+<ng-template #editEmployeeModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Update Profile</h4>
+    <img src="selectedEmployee?.imageUrl" alt="Image N/A">
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
     <form #employeeForm="ngForm">
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="Code" placeholder="Employee Code" value="" disabled>
-        <label for="code">Code</label>
+      <div class="row mb-3">
+          <div class="col-2 form-floating">
+            <input type="text" class="form-control" id="employeeId" placeholder="Employee id" value="{{selectedEmployee?.id}}" disabled>
+            <label for="employeeId">ID:</label>
+          </div>
+          <div class="col-10 form-floating">
+            <input type="text" class="form-control" id="employeeCode" placeholder="Employee Code" value="{{selectedEmployee?.employeeCode}}" disabled>
+            <label for="employeeCode">Employee Code:</label>
+          </div>
       </div>
       <div class="form-floating">
-        <input type="text" class="form-control" id="name" placeholder="Name">
+        <input type="text" class="form-control" id="employeeName" placeholder="Name" value="{{selectedEmployee?.name}}">
         <label for="name">Name</label>
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" id="employeeUrl" placeholder="Url" value="{{selectedEmployee?.imageUrl}}">
+        <label for="name">Picture Url</label>
       </div>
     </form>
   </div>
