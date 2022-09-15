@@ -5,8 +5,10 @@ import com.investtrust.subsciptionmanager.model.Employee;
 import com.investtrust.subsciptionmanager.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,13 +30,16 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Employee employee){
+
         return employeeRepo.save(employee);
+
     }
 
     public Employee findEmployeeById(Long id){
         return employeeRepo.findEmployeeById(id).orElseThrow(() -> new UserNotFoundException("No such employee found"));
     }
 
+    @Transactional
     public void deleteEmployee(Long id){
         employeeRepo.deleteEmployeeById(id);
     }

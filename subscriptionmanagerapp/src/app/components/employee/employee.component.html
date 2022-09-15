@@ -6,7 +6,7 @@
                 <img src="{{employee.imageUrl}}" class="card-img-top" alt="Picture N/A">
                 <div class="card-body">
                   <h5 class="card-title">{{employee.name}}</h5>
-                  <p class="card-text">ID#: {{employee.id}}</p>
+                  <p class="card-text">ID#: {{employee.employeeCode}}</p>
                   <p class="card-text">name: {{employee.name}}</p>
                   <div>
                     <a class="btn btn-sm btn-outline-primary" (click)="openModal(employee, editEmployeeModal)">edit</a>
@@ -31,23 +31,27 @@
     </div>
   </div>
   <div class="modal-body text-center">
-    <form class="border-top" #employeeForm="ngForm">
+    <form class="border-top" #employeeAddForm="ngForm">
       <div class="mb-2 form-floating">
-        <input type="text" class="form-control" id="employeeName" placeholder="Name" >
+        <input type="text" class="form-control" id="employeeName" placeholder="Name" name="name" ngModel>
         <label for="employeeName">Name</label>
       </div>
       <div class="mb-2 form-floating">
-        <input type="text" class="form-control" id="employeeTitle" placeholder="Name" >
+        <input type="email" class="form-control" id="employeeEmail" placeholder="Email" name="email" ngModel>
+        <label for="employeeEmail">Email</label>
+      </div>
+      <div class="mb-2 form-floating">
+        <input type="text" class="form-control" id="employeeTitle" placeholder="Title" name="jobTitle" ngModel>
         <label for="employeeTitle">Job Title</label>
       </div>
       <div class="form-floating">
-        <input type="text" class="form-control" id="employeeUrl" placeholder="Url" >
+        <input type="text" class="form-control" id="employeeUrl" placeholder="Url" ngModel name="imageUrl">
         <label for="employeeUrl">Picture Url</label>
       </div>
     </form>
   </div>
   <div class="text-center mb-2">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Add</button>
+    <button type="button" class="btn btn-outline-dark" (click)="addEmployee(employeeAddForm)">Add</button>
   </div>
 </ng-template>
 
@@ -61,38 +65,40 @@
     </div>
   </div>
   <div class="modal-body text-center">
-    <img src="selectedEmployee?.imageUrl" class="card-img-top"  alt="Image N/A">
-    <form class="border-top" #employeeForm="ngForm">
+    <img src="{{selectedEmployee.imageUrl}}" class="card-img-top"  alt="Image N/A">
+    <form class="border-top" #employeeEditForm="ngForm">
       <div class="row mb-2">
-        <div class="col-2">
-          <label for="employeeId">ID:</label>
-          <input type="text" class="form-control" id="employeeId" placeholder="Employee id" value="{{selectedEmployee?.id}}" disabled>
-        </div>
-        <div class="col-10">
+        <div class="col-12">
+          <input type="hidden" name="id" [(ngModel)]="selectedEmployee.id" name="id">
           <label for="employeeCode">Employee Code:</label>
-          <input type="text" class="form-control" id="employeeCode" placeholder="Employee Code" value="{{selectedEmployee?.employeeCode}}" disabled>
+          <input type="text" class="form-control" id="employeeCode" placeholder="Employee Code" [(ngModel)]="selectedEmployee.employeeCode" name="employeeCode" disabled>
         </div>
       </div>
       <div class="mb-2 form-floating">
-        <input type="text" class="form-control" id="employeeName" placeholder="Name" value="{{selectedEmployee?.name}}">
+        <input type="text" class="form-control" id="employeeName" placeholder="Name" [(ngModel)]="selectedEmployee.name" name="name">
         <label for="employeeName">Name</label>
       </div>
       <div class="mb-2 form-floating">
-        <input type="text" class="form-control" id="employeeTitle" placeholder="Name" value="{{selectedEmployee?.jobTitle}}">
+        <input type="text" class="form-control" id="employeeTitle" placeholder="Name" [(ngModel)]="selectedEmployee.jobTitle" name="jobTitle">
         <label for="employeeTitle">Job Title</label>
       </div>
+      <div class="mb-2 form-floating">
+        <input type="email" class="form-control" id="emailId" placeholder="Name" [(ngModel)]="selectedEmployee.email" name="email">
+        <label for="emailId">Email</label>
+      </div>
       <div class="form-floating">
-        <input type="text" class="form-control" id="employeeUrl" placeholder="Url" value="{{selectedEmployee?.imageUrl}}">
+        <input type="text" class="form-control" id="employeeUrl" placeholder="Url" [(ngModel)]="selectedEmployee.imageUrl" name="imageUrl">
         <label for="employeeUrl">Picture Url</label>
       </div>
     </form>
   </div>
   <div class="text-center mb-2">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="editEmployee(employeeEditForm)">Save</button>
   </div>
 </ng-template>
 
 <ng-template #deleteEmployeeModal let-modal>
+  <div class="modal-content rounded border border-5 border-danger" >
     <div class="row border-1 border-bottom m-2 text-center">
       <div class="col-11">
         <h4 class="modal-title" id="modal-basic-title">Delete Profile</h4>
@@ -103,34 +109,35 @@
     </div>
     <div class="modal-body text-center">
       <img src="selectedEmployee?.imageUrl" class="card-img-top"  alt="Image N/A">
-      <form class="border-1 border-top" #employeeForm="ngForm">
+      <form class="border-1 border-top" #employeeDeleteForm="ngForm">
         <div class="row mb-2">
           <div class="col-2">
             <label for="employeeId">ID:</label>
-            <input type="text" class="form-control" id="employeeId" placeholder="Employee id" value="{{selectedEmployee?.id}}" disabled>
+            <input type="text" class="form-control" id="employeeId" placeholder="Employee id" value="{{selectedEmployee.id}}" disabled>
           </div>
           <div class="col-10">
             <label for="employeeCode">Employee Code:</label>
-            <input type="text" class="form-control" id="employeeCode" placeholder="Employee Code" value="{{selectedEmployee?.employeeCode}}" disabled>
+            <input type="text" class="form-control" id="employeeCode" placeholder="Employee Code" value="{{selectedEmployee.employeeCode}}" disabled>
           </div>
         </div>
         <div class="mb-2 form-floating">
-          <input type="text" class="form-control" id="employeeName" placeholder="Name" value="{{selectedEmployee?.name}}" disabled>
+          <input type="text" class="form-control" id="employeeName" placeholder="Name" value="{{selectedEmployee.name}}" disabled>
           <label for="employeeName">Name</label>
         </div>
         <div class="mb-2 form-floating">
-          <input type="text" class="form-control" id="employeeTitle" placeholder="Name" value="{{selectedEmployee?.jobTitle}}" disabled>
+          <input type="text" class="form-control" id="employeeTitle" placeholder="Name" value="{{selectedEmployee.jobTitle}}" disabled>
           <label for="employeeTitle">Job Title</label>
         </div>
         <div class="align-items-center">
           <div class=" form-floating">
-            <input type="number" class="text-center form-control" id="employeeId" placeholder="ID">
+            <input type="number" class="text-center form-control" id="employeeId" placeholder="ID" name="id" ngModel>
             <label for="employeeId">Retype ID to delete</label>
           </div>
         </div>
       </form>
     </div>
     <div class="text-center mb-2">
-      <button type="button" class="btn btn-outline-danger" (click)="modal.close('Save click')">DELET</button>
+      <button type="button" class="btn btn-outline-danger" (click)="deleteEmployeeById(employeeDeleteForm.value.id)">DELETE</button>
     </div>
+  </div>
 </ng-template>

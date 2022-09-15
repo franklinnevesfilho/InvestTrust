@@ -2,6 +2,7 @@ package com.investtrust.subsciptionmanager.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 public class Employee implements Serializable {
@@ -10,7 +11,7 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     private String employeeCode;
     @Column
     private String name;
@@ -24,7 +25,6 @@ public class Employee implements Serializable {
     public Employee() {}
 
     public Employee(String name, String email, String jobTitle, String imageUrl) {
-        this.employeeCode = employeeCode;
         this.name = name;
         this.email = email;
         this.jobTitle = jobTitle;
