@@ -2,7 +2,6 @@ package com.investtrust.subsciptionmanager.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 public class Employee implements Serializable {
